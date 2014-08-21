@@ -203,8 +203,6 @@ module AssignableValues
           collisions = model.methods & status_method_array(self)
           if collisions.present?
             raise MethodCollision, "Status assignment collision(s): #{collisions*', '}"
-          else
-            define_check_methods self
           end
         end
 
@@ -214,16 +212,6 @@ module AssignableValues
 
         def query_methods(record)
           parsed_values(record).map{ |x| x+'?' }
-        end
-
-        def define_check_methods(record)
-          parsed_values(record).each do |value|
-            enhance_instance do
-              define_method "#{value}?" do
-                record.send(property.to_sym) == value
-              end
-            end
-          end
         end
 
         def parsed_values(record)
