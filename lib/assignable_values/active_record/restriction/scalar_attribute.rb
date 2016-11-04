@@ -119,7 +119,7 @@ module AssignableValues
         end
 
         def has_previously_saved_value?(record)
-          !record.new_record? && record.respond_to?(value_was_method)
+          !record.try(:new_record?) && record.respond_to?(value_was_method)
         end
 
         def previously_saved_value(record)
